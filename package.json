@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "prisma generate && npx tsc",
+    "postinstall": "prisma generate",
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "swagger": "node ./swagger/swagger.js"
@@ -36,6 +37,6 @@
     "prisma": "^5.19.1",
     "swagger-autogen": "^2.23.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   }
 }
