@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "user" ALTER COLUMN "username" DROP NOT NULL,
+ALTER COLUMN "fullname" DROP NOT NULL,
+ALTER COLUMN "bio" DROP NOT NULL;

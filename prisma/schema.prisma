@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  username String?
+  fullname String?
+  bio      String?
+
+  image      String? @default("https://i.pinimg.com/originals/82/4d/b0/824db05450ed6305253092e8aedb329f.jpg")
+  background String? @default("https://img.freepik.com/premium-photo/red-gradient-background_1271337-787.jpg")
+
+  followers Follow[] @relation("followers")
+  following Follow[] @relation("following")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  role Roles @default(MEMBER)
+
+  post    Post[]
+  replies Replies[]
+  Like    Like[]
+
+  @@map("user")
+}
+
+model Post {
+  id           Int     @id @default(autoincrement())
+  content      String?
+  image        String?
+  likesCount   Int?    @default(0)
+  repliesCount Int?    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorID Int
+  author   User      @relation(fields: [authorID], references: [id])
+  replies  Replies[]
+  Like     Like[]
+
+  @@map("post")
+}
+
+model Replies {
+  id           Int     @id @default(autoincrement())
+  content      String?
+  image        String?
+  likesCount   Int?    @default(0)
+  repliesCount Int?    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postID Int
+  post   Post @relation(fields: [postID], references: [id])
+
+  authorID Int
+  author   User @relation(fields: [authorID], references: [id])
+
+  @@map("replies")
+}
+
+model Follow {
+  id Int @id @default(autoincrement())
+
+  followerID Int
+  follower   User @relation("followers", fields: [followerID], references: [id])
+
+  followingID Int
+  following   User @relation("following", fields: [followingID], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([followerID, followingID])
+}
+
+model Like {
+  id     Int @id @default(autoincrement())
+  userID Int
+  postID Int
+
+  user User @relation(fields: [userID], references: [id])
+  post Post @relation(fields: [postID], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userID, postID])
+  @@map("like")
+}
+
+enum Roles {
+  ADMIN
+  MEMBER
+}
