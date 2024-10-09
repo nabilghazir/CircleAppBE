@@ -2,7 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express } from "express";
 import swaggerUI from "swagger-ui-express";
-import { routerV1 } from "./routes/v1.0";
+import { routerV1 } from "./src/routes/v1.0";
 
 dotenv.config();
 
