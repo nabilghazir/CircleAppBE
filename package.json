@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "prisma generate && npx tsc",
+    "build": "prisma generate && prisma migrate deploy && tsc",
     "postinstall": "prisma generate",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon index.ts",
     "swagger": "node ./swagger/swagger.js"
   },
   "keywords": [],
