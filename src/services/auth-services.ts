@@ -35,8 +35,10 @@ class AuthService {
     ): Promise<{ User: Omit<User, "password">; token: string }> {
         const FetchUser = await Prisma.user.findFirst({
             where: {
-                email: data.email,
-                username: data.username
+                OR: [
+                    { email: data.username },
+                    { username: data.username }
+                ]
             }
         });
 
