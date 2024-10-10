@@ -12,6 +12,11 @@ class PostService {
             where: { authorID },
             include: {
                 author: {
+                    select: {
+                        fullname: true,
+                        avatar: true,
+                        username: true
+                    },
                     omit: {
                         password: true
                     }
@@ -55,7 +60,7 @@ class PostService {
                     select: {
                         fullname: true,
                         username: true,
-                        image: true,
+                        avatar: true,
                         background: true
                     }
                 }

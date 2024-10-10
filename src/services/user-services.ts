@@ -18,7 +18,7 @@ class UserService {
                 username: true,
                 fullname: true,
                 bio: true,
-                image: true,
+                avatar: true,
                 background: true,
                 followers: true,
                 following: true,
@@ -40,7 +40,7 @@ class UserService {
                 bio: true,
                 email: true,
                 background: true,
-                image: true,
+                avatar: true,
                 _count: {
                     select: {
                         followers: true,
